@@ -1,0 +1,417 @@
+% !TeX program = xelatex
+\documentclass{beamer}
+\usepackage{etex} % fixes new-dimension error
+%-------------- template --------------------------------------------------
+\usetheme{metropolis}
+\metroset{block=fill}
+%\usetheme{Boadilla}
+
+% Configuring the foot line
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.4\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertsection
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+% No configuration symbols
+\makeatother
+\setbeamertemplate{navigation symbols}{}
+%----------------------------------------------------------------------------
+\usepackage{graphicx,amsmath}
+\usepackage{stmaryrd} % cf. interleave
+\usepackage{booktabs}
+\usepackage{amscd}
+\usepackage{multicol}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{alltt}
+\usepackage{proof}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage[new]{old-arrows}
+\usepackage[all]{xy}
+\usepackage{pgfplots}
+\usepackage{textcomp}
+\usepackage{listings}
+\usetikzlibrary{arrows.meta, calc, fit, tikzmark}
+
+\AtBeginSection[]
+{
+    \begin{frame}
+        \frametitle{Table of Contents}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+\author[Renato Neves]{Renato Neves}
+
+% logos of institutions
+\titlegraphic{
+  \begin{textblock*}{5cm}(7.8cm,7.45cm)
+     \includegraphics[scale=0.044]{../images/uminho.png}\hspace*{.85cm}~%
+  \end{textblock*}
+  \begin{textblock*}{5cm}(9.8cm,7.45cm)
+    \includegraphics[scale=0.4]{../images/haslab.pdf}
+  \end{textblock*}
+}
+
+% code
+\lstset{
+showstringspaces=false,
+keywordstyle=\color{blue},
+basicstyle=\fontsize{08.5}{10}\ttfamily,
+emph={while,do,if,diff,for,exit,blue,unif,then,else,wait,bernoulli,exp,normal,sqrt,cos,';'},emphstyle=\color{blue},
+breaklines=true,
+escapeinside={*@}{*@}
+}
+
+\input{macros}
+
+
+% No date
+\date{}
+
+
+\begin{document}
+
+\title{Lecture 1}
+
+\frame[plain]{\titlepage}
+
+\section{Overview}
+
+\begin{frame}[fragile]{From equations to metric equations}
+     
+        \hspace{-1cm}
+        \begin{minipage}{0.53\textwidth}
+        \begin{lstlisting}
+                x *@$\leftarrow$*@ normal(0,1)
+                if x > *@$10^{100}$*@
+                   then p(x)
+                   else q(x)
+        \end{lstlisting}
+        \end{minipage}
+        \begin{minipage}{0.45\textwidth}
+        \begin{lstlisting}
+                q(x)
+        \end{lstlisting}
+        \end{minipage}
+
+        \bigskip
+        \bigskip
+        For practical purposes the same programs
+\end{frame}
+
+\begin{frame}[fragile]{From equations to metric equations}
+     
+        \hspace{-1cm}
+        \begin{minipage}{0.50\textwidth}
+        \begin{lstlisting}
+                x *@$\leftarrow$*@ *@\color{blue}{$\mu$}*@; p(x)
+        \end{lstlisting}
+        \end{minipage}
+        \begin{minipage}{0.50\textwidth}
+        \begin{lstlisting}
+                x *@$\leftarrow$*@ *@\color{blue}{$\nu$}*@; p(x)
+        \end{lstlisting}
+        \end{minipage}
+
+        \bigskip
+        \bigskip
+        What is the relation between these programs ?
+\end{frame}
+
+\begin{frame}{From equations to metric equations}
+       \begin{center}
+       \begin{minipage}{0.40\textwidth}
+              \includegraphics[scale=0.30]{../images/bloch.png}
+       \end{minipage}
+       \begin{minipage}{0.30\textwidth}
+               \includegraphics[scale=0.15]{../images/size.jpg}
+       \end{minipage}
+       \end{center}
+
+       \bigskip
+       \bigskip
+       There is a \alert{continuum} of quantum operations
+
+       But in hardware just a \alert{finite} set of atomic ones
+\end{frame}
+
+\begin{frame}{From equations to metric equations}
+
+
+        Traditional program equivalence is often too strict
+
+        \bigskip
+        \pause
+        Goal: present a more general, \alert{metric} counterpart
+
+        \bigskip
+        \pause
+        Brings \alert{functional analysis} to programming languages
+        \begin{itemize}
+                \item Cauchy sequences (of programs)
+                \item Lipschitz continuity (of program constructs)
+                \item \dots
+        \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Programme}
+
+        Lecture 1 : a basic `programming language' (our playground)
+
+        \pause
+        \bigskip
+        Lecture 2 : its \alert{semantics} (mathematical meaning of programs)
+
+        \pause
+        \bigskip
+        Lecture 3 : \alert{logical} framework for relating progrs. w.r.t.
+        \alert{distances}
+
+        \pause
+        \bigskip
+        Lecture 4 : applications and extensions
+\end{frame}
+
+\section{Linear lambda-calculus}
+
+\begin{frame}{Why ?}
+
+        Basis of many programming languages 
+
+        \bigskip
+        Close relationship to logic
+
+        \bigskip
+        Interacts very well with metric reasoning
+
+        \bigskip
+        Suitable for probabilistic and quantum programming
+\end{frame}
+
+\begin{frame}{Going back to ancient Greece}
+  \begin{minipage}[0.3\textheight]{\textwidth}
+          $\typeA,\typeB \dots$ denote \alert{propositions}
+          and $\typeI$ a `trivial' proposition   
+  \end{minipage}
+
+  If $\typeA$ and $\typeB$ are propositions then
+  \begin{itemize}
+    \item $\typeA \otimes \typeB$ is a proposition -- 
+        joining $\typeA$ with $\typeB$
+    \item $\typeA \multimap \typeB$ is a proposition -- 
+        $\typeA$ implies $\typeB$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Going back to ancient Greece}
+  
+  $\Gamma, \Delta \dots $ denote a \alert{list of propositions} (called contexts)
+
+  $\Gamma \vljud \typeA$ reads \emph{``if the propositions in $\Gamma$ hold
+  then  $\typeA$ also holds''}
+
+  \pause
+  \small{
+  \begin{flalign*}
+      \infer[(\rulename{ass})]{\typeA \vljud \typeA}{} \hspace{2cm}
+      \infer[(\rulename{trv})]{(-) \vljud  \typeI}{}  \hspace{2cm}
+      \infer[(\rulename{dsc})]{\Gamma,\Delta \vljud \typeA}{
+              \Gamma \vljud \typeI \qquad
+              \Delta \vljud \typeA
+      }
+  \end{flalign*}
+  \begin{flalign*}
+      \infer[(\rulename{pair})]{\Gamma,\Delta \vljud \typeA \otimes \typeB}
+      {\Gamma \vljud \typeA \qquad \Delta \vljud \typeB} \hspace{2cm}
+      \infer[(\rulename{pm})]{
+              \Gamma, \Delta \vljud \typeC
+      }{
+              \Gamma \vljud \typeA \otimes \typeB
+              \qquad
+              \Delta, \typeA, \typeB \vljud \typeC
+      }
+  \end{flalign*}
+  \begin{flalign*}
+      \infer[(\rulename{cry})]{\Gamma \vljud \typeA \multimap \typeB}
+      {
+        \Gamma, \typeA \vljud  \typeB
+      }
+      \hspace{2cm}
+      \infer[(\rulename{app})]{\Gamma,\Delta \vljud \typeB}
+      {\Gamma \vljud  \typeA \multimap \typeB \quad
+        \Delta \vljud  \typeA}
+  \end{flalign*}
+  } 
+  
+\end{frame}
+
+\begin{frame}{Exercises}
+  Derive the following judgements
+  \begin{itemize}
+          \item $\typeA \otimes \typeB \vdash \typeB \otimes \typeA$
+          \item $\typeA \multimap \typeB,\typeB \multimap \typeC 
+                  \vljud \typeA \multimap \typeC$ 
+  \end{itemize}        
+\end{frame}
+
+
+\begin{frame}{New knowledge from old}
+  The rules below are \alert{derivable} from the previous system
+
+  \begin{flalign*}
+      \infer[\text{(exchange)}]{\Gamma, \typeB, \typeA,\Delta \vljud \typeC}{
+      \Gamma, \typeA, \typeB,\Delta \vljud \typeC}
+  \end{flalign*}
+  \begin{flalign*}
+      \infer[\text{(cut elimination)}]{\Gamma, \Delta \vljud \typeB}{
+      \Gamma, \typeA \vljud \typeB \qquad \Delta \vljud \typeA}
+  \end{flalign*}
+
+\end{frame}
+
+
+\begin{frame}{Linear $\lambda$-calculus}
+
+  Types are defined by $\typeA ::= \typeI \mid \typeA \otimes \typeA \mid \typeA
+  \multimap \typeA$
+
+  $\Gamma$ now a \alert{non-repetitive} list of typed variables ($x_1 :
+  \typeA_1 \dots x_n : \typeA_n$)
+
+  \pause
+  \small{
+  \begin{flalign*}
+          \hspace{-0.2cm}
+      \infer[]{x : \typeA \vljud x : \typeA}{} \hspace{2cm}
+      \infer[]{(-) \vljud  \ast : \typeI}{}  \hspace{2cm}
+      \infer{\Gamma,\Delta \vljud t \text{ to } \ast.\  \, s: \typeA}{
+              \Gamma \vljud t : \typeI \qquad
+              \Delta \vljud s : \typeA
+      }
+  \end{flalign*}
+  \begin{flalign*}
+  \hspace{-0.2cm}
+      \infer[]{\Gamma,\Delta \vljud t \otimes s : \typeA \otimes \typeB}
+      {\Gamma \vljud t : \typeA \qquad \Delta \vljud s: \typeB} \hspace{2cm}
+      \infer{
+              \Gamma, \Delta \vljud 
+              \text{pm } t \text{ to } x \otimes y.\, s: \typeC
+      }{
+              \Gamma \vljud t : \typeA \otimes \typeB
+              \qquad
+              \Delta, x: \typeA, y: \typeB \vljud s: \typeC
+      }
+  \end{flalign*}
+  \begin{flalign*}
+      \hspace{-0.2cm}
+      \infer[]{\Gamma \vljud \lambda x : \typeA.\ t : \typeA \multimap \typeB}
+      {
+        \Gamma, x: \typeA \vljud t : \typeB
+      }
+      \hspace{2cm}
+      \infer[]{\Gamma,\Delta \vljud t \, s : \typeB}
+      {\Gamma \vljud t: \typeA \multimap \typeB \quad
+        \Delta \vljud s:  \typeA}
+  \end{flalign*}
+        } 
+\end{frame}
+
+\begin{frame}{Examples of $\lambda$-terms}
+  \begin{flalign*}
+          & x : \alert{\typeA \otimes \typeB}
+          \vljud \text{pm } x \text{ to} \> x_1 \otimes x_2. \> x_2 \otimes x_1  : \alert{ \typeB \otimes \typeA }
+          && \text{(swap)}
+          \\[15pt]
+          & f : \alert{\typeA \multimap \typeB}, g : \alert{\typeB \multimap \typeC} \vljud
+          \lambda x : \typeA . \> g (f \> x) : \alert{\typeA \multimap \typeC}
+          && \text{(composition)}
+  \end{flalign*}
+
+  \bigskip
+  \pause
+  \begin{block}{Exercise}
+          Show that these are indeed valid judgements
+  \end{block}
+\end{frame}
+
+
+\begin{frame}{Substitution -- a form of computation}
+        \begin{block}{The essence}
+                Substitution of variables in a term $t$ by another term $s$
+        \end{block}
+
+        $t[s/x]$ reads \emph{"replace every occurrence of $x$ in $t$ by $s$"}
+
+        \pause
+        \bigskip
+        \begin{examples}
+                \begin{itemize}
+                        \item $x[t/x] = x$
+                        \item $(x \otimes y)[t/x] = t \otimes y$
+                        \item $(\text{pm } x \text{ to } x_1 \otimes x_2. \>
+                                s) \> [t/x] = 
+                                \text{pm } t \text{ to } x_1 \otimes x_2. \> s$
+                \end{itemize}
+        \end{examples}
+
+        \begin{block}{Exercise}
+                Can you define substitution formally ?
+        \end{block}
+\end{frame}
+
+\begin{frame}{Cut elimination from the programming lens}
+  \begin{flalign*}
+          \infer[\text{(cut elimination)}]{\Gamma,\Delta\vljud t[s/x] :\typeB}{
+      \Gamma, x: \typeA \vljud t: \typeB \qquad \Delta \vljud s : \typeA}
+  \end{flalign*}
+
+  \emph{i.e.} cut elimination represents a form of computation
+
+  \pause
+  \bigskip
+  Also crucial to the equational system of linear $\lambda$-calculus 
+\end{frame}
+
+\begin{frame}{(a fragment of) the equational system}
+  \scalebox{1.12}{  
+  \begin{tabular}{r c l}
+    $\text{pm}\ t \otimes s\ \text{to}\ x \otimes y.\ u$ &
+    $=$ & $u[t/x][s/y]$ \\
+    $\text{pm}\ t\ \text{to}\ x \otimes y.\
+    u[x \otimes y / z]$ &
+    $=$ & $u[t/z]$ 
+    \\[5pt]
+    $\ast\ \text{to}\ \ast.\ t$ & $=$ & $t$ \\
+    $v\ \text{to}\ \ast.\ w[\ast/ z]$ & $=$ & $w[t/z]$
+    \\[5pt]
+    $(\lambda x.\ t)\ s$ &$=$& $t[s/x]$ \\
+    $\lambda x. (t\ x)$ &$=$& $t$
+  \end{tabular}}
+  %
+\end{frame}
+
+\begin{frame}{Exercises}
+
+        Show that
+        \begin{itemize}
+                \item $\underbrace{\Big ( \lambda x. \> \text{pm } x \text{ to } x_1 \otimes x_2. 
+                        \> x_2 \otimes x_1 \Big )}_{\text{swap}} \> (a \otimes b) = b \otimes a$
+                \item $\underbrace{\Big ( \lambda x. \> \text{pm } x \text{ to } x_1 \otimes x_2. 
+                        \> x_1 \text{ to} \ast. \> x_2 \Big )}_{\text{discard}} \> (\ast \otimes a) =  a$
+                \item $\underbrace{t \> x = s \> x : \typeB 
+                        \> \> \Longrightarrow \> \> t = s : \typeA \multimap \typeB}_{extensionality}$
+        \end{itemize}
+\end{frame}
+\end{document}

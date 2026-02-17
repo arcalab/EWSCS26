@@ -9,12 +9,12 @@ programs to match the same speeds *exactly*; instead the idea is to determine
 metric.
 
 The course highlights how metric reasoning can be used in practice, with
-illustrations from probabilistic programming and other computational models.
-Our focus will be rather on fundamental principles -- involving a core
-`programming language' (lambda-calculus), corresponding laws of metric
-equational systems, and their *categorical* semantics.
+illustrations from probabilistic programming and beyond. The focus will be on
+fundamental principles -- involving a core `programming language'
+(lambda-calculus), corresponding laws of metric equational systems, and
+*categorical* semantics.
 
-The emphasis throughout is on intuition, the essence of things, and main ideas,
+The emphasis throughout is on intuition, main ideas, and the essence of things,
 rather than full technical detail. Thus no prior knowledge of lambda-calculus
 or category theory is assumed.
 
@@ -49,3 +49,20 @@ or category theory is assumed.
 + soundness and (approximate) completeness (only some brief comments)
 + applications
 + concluding remarks
+
+## References
+
+Fredrik Dahlqvist and Renato Neves. The syntactic side of autonomous categories
+enriched over generalised metric spaces. Logical Methods in Computer Science,
+Volume 19, Issue 4, December 2023
+
+Fredrik Dahlqvist and Renato Neves. A complete v-equational system for graded
+lambda-calculus. In Marie Kerjean and Paul Blain Levy, editors, Proceedings of
+the 39th Conference on the Mathematical Foundations of Programming Semantics,
+MFPS XXXIX, Indiana University, Bloomington, IN, USA, June 21-23, 2023, volume
+3 of EPTICS. EpiSciences, 2023.
+
+Fredrik Dahlqvist, Renato Neves. An internal language for categories enriched
+over generalised metric spaces. Proc. 30th EACSL Annual Conference on Computer
+Science Logic (CSL 2022). Leibniz International Proceedings in Informatics
+(LIPIcs), pp 16:1-16-18, 2022. DOI: 10.4230/LIPIcs.CSL.2022.16
