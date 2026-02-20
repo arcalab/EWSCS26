@@ -1,0 +1,198 @@
+% !TeX program = xelatex
+\documentclass{beamer}
+\usepackage{etex} % fixes new-dimension error
+%-------------- template --------------------------------------------------
+\usetheme{metropolis}
+\metroset{block=fill}
+%\usetheme{Boadilla}
+
+% Configuring the foot line
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.4\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertsection
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+% No configuration symbols
+\makeatother
+\setbeamertemplate{navigation symbols}{}
+%----------------------------------------------------------------------------
+\usepackage{graphicx,amsmath}
+\usepackage{stmaryrd} % cf. interleave
+\usepackage{booktabs}
+\usepackage{amscd}
+\usepackage{multicol}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{alltt}
+\usepackage{proof}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage[new]{old-arrows}
+\usepackage[all]{xy}
+\usepackage{pgfplots}
+\usepackage{textcomp}
+\usepackage{listings}
+\usetikzlibrary{arrows.meta, calc, fit, tikzmark}
+
+\AtBeginSection[]
+{
+    \begin{frame}
+        \frametitle{Table of Contents}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+\author[Renato Neves]{Renato Neves}
+
+% logos of institutions
+\titlegraphic{
+  \begin{textblock*}{5cm}(7.8cm,7.45cm)
+     \includegraphics[scale=0.044]{../images/uminho.png}\hspace*{.85cm}~%
+  \end{textblock*}
+  \begin{textblock*}{5cm}(9.8cm,7.45cm)
+    \includegraphics[scale=0.4]{../images/haslab.pdf}
+  \end{textblock*}
+}
+
+% code
+\lstset{
+showstringspaces=false,
+keywordstyle=\color{blue},
+basicstyle=\fontsize{08.5}{10}\ttfamily,
+emph={while,do,if,diff,for,exit,blue,unif,then,else,wait,bernoulli,exp,normal,sqrt,cos,';'},emphstyle=\color{blue},
+breaklines=true,
+escapeinside={*@}{*@}
+}
+
+\input{macros}
+
+
+% No date
+\date{}
+
+
+\begin{document}
+
+\title{Lecture 2}
+
+\frame[plain]{\titlepage}
+
+\section{Overview}
+
+\begin{frame}{Today}
+        The bare essentials of category theory
+
+
+        \medskip
+        Useful for providing a semantics to our calculus
+\end{frame}
+
+\begin{frame}{Why semantics?}
+
+        Links the calculus to well-known mathematical models
+                
+        \medskip
+        Also useful for obtaining new insights about the calculus
+\end{frame}
+
+\section{Category Theory}
+
+\begin{frame}{Category theory in a nutshell}
+
+        The mathematics of mathematics
+
+        \medskip
+        A way of proving results once and for all
+
+        \medskip
+        \dots
+\end{frame}
+
+\begin{frame}{A category}
+
+        Consists of a collection of things (aka \alert{objects}) $A,B,C$ \dots
+
+        \medskip
+        and arrows (aka \alert{morphisms}) $f : A \to B$ connecting these things
+
+        \pause
+        \bigskip
+        There is an \alert{identity} arrow $\id : A \to A$ for each $A$
+
+        \pause
+        \bigskip
+        Arrows are \alert{composable} ie
+        \[
+                \infer{
+                        g \comp f : A \to C
+                }{
+                        f : A \to B \qquad g : B \to C}
+        \]
+        \pause
+        (composition is associative and has $\id$ as neutral element)
+\end{frame}
+
+\begin{frame}{Examples}
+        \begin{itemize}
+                \item Sets and functions ($\Set$) \\[10pt]
+                \item Vector spaces and linear functions ($\CVec$) \\[10pt]
+                \item Metric spaces and non-expansive functions ($\Met$) \\[10pt]
+                \item Reals numbers and the $\leq$ relation ($\CR$)  \\[10pt]
+                \item $\Nats$-indexed metric spaces and $\Nats$-indexed maps
+                        $([\Nats,\Met])$
+        \end{itemize}
+
+        \pause
+        \vfill
+        \begin{block}{Exercise}
+                Show that all these are indeed examples of a category 
+        \end{block}
+\end{frame}
+
+\begin{frame}{A symmetric monoidal category}
+
+        A monoidal category allows
+        \begin{itemize}
+                \item \alert{pairing} two objs. $A$ and $B$ into a single one $A
+                        \otimes B$ 
+                \item and analogously for morphisms, ie
+                        \[
+                                \infer{
+                                        f \otimes g : A \otimes B \to A' \otimes B'
+                                }{
+                                        f : A \to A' \qquad g : B \to B'
+                                }
+                        \]
+                \item It has an obj. $I$ such that $i : I \otimes A \stackrel{\cong}{\to} A$ for
+                        every obj. $A$
+        \end{itemize}
+
+        {\scriptsize (of course a number of coherence laws also need to hold)}
+
+        \bigskip
+        There is also a \alert{symmetry} morphism $\mathrm{sw} : A \otimes B
+        \stackrel{\cong}{\to} B \otimes A$
+\end{frame}
+
+\begin{frame}{Examples}
+
+        All previous examples of a category are also symm. monoidal
+
+        \bigskip
+        \begin{block}{Exercise}
+                Show that such is indeed the case 
+        \end{block}
+\end{frame}
+
+
+
+\end{document}
