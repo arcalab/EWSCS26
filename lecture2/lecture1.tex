@@ -193,6 +193,167 @@ escapeinside={*@}{*@}
         \end{block}
 \end{frame}
 
+\begin{frame}{A symmetric monoidal closed category}
+
+        For every pair of objects $A$ and $B$ we 
+        have an object $A \multimap B$
+
+        \pause
+        \dots\ s.t. the following diagram commutes
+        for a \alert{unique} $\lambda f$
+
+        \[
+               \xymatrix@C=50pt{
+                       A \otimes B \ar[dr]^{f} 
+                       \ar@{->}[d]_{(\lambda f) \otimes \id}
+                       \\
+                       (A \multimap B) \otimes B \ar[r]_(0.55){\mathrm{app}} & C
+               }
+        \]
+
+        \pause
+\end{frame}
+
+\begin{frame}{Examples}
+
+        All previous examples are also symm. monoidal closed
+
+        \bigskip
+        \begin{block}{Exercise}
+                Show that such is indeed the case 
+        \end{block}
+\end{frame}
 
 
+\section{Categorical semantics of linear lambda-calculus}
+
+\begin{frame}{Categorical semantics of linear lambda-calculus}
+
+        Any smc category gives semantics to linear $\lambda$-calculus
+
+        \medskip
+        Types interpreted as objects
+
+        \medskip
+        Terms interpreted as morphisms
+\end{frame}
+
+\begin{frame}{The semantics}
+
+  Types $\typeA$ interpreted as objects
+  \begin{flalign*}
+    \sem{\typeI} & = I \\
+    \sem{\typeA \otimes \typeB} & = \sem{\typeA} \otimes \sem{\typeB} \\
+    \sem{\typeA \multimap \typeB} & = \sem{\typeA} \multimap\sem{\typeB}
+ \end{flalign*}
+
+ Typing contexts $\Gamma$ interpreted as tensor products
+ \begin{flalign*}
+  \sem{\Gamma}\ = \sem{x_1 : \typeA_1, \dots, x_n : \typeA_n}\ =
+ \sem{\typeA_1}\ \otimes \dots \otimes \sem{\typeA_n} 
+ \end{flalign*}
+
+ Terms $\Gamma \vljud t : \typeA$ interpreted as morphisms
+ \begin{flalign*}
+   \sem{\Gamma \vljud t : \typeA}\ : \sem{\Gamma}\ \longrightarrow \sem{\typeA}
+ \end{flalign*}
+
+\end{frame}
+
+\begin{frame}{The semantics}
+  \small{
+  \begin{flalign*}
+      \hspace{-0.2cm}
+      \infer[]{\sem{x : \typeA \vljud x : \typeA} = \id}{} \hspace{1cm}
+      \infer[]{\sem{(-) \vljud  \ast : \typeI} = \id}{} 
+  \end{flalign*}
+  \begin{flalign*}
+      \hspace{-0.2cm}
+      \infer{\sem{\Gamma,\Delta \vljud t \text{ to } \ast.\  \, s: \typeA}\ = i \comp (f \otimes g)}{
+              \sem{\Gamma \vljud t : \typeI}\ = f \qquad
+              \sem{\Delta \vljud s : \typeA}\ = g
+      }
+      \hspace{1cm}
+      \infer[]{\sem{\Gamma,\Delta \vljud t \otimes s : \typeA \otimes \typeB}\ = f \otimes g}
+      {\sem{\Gamma \vljud t : \typeA}\ = f 
+      \qquad \sem{\Delta \vljud s: \typeB}\ = g
+      }
+  \end{flalign*}
+  \begin{flalign*}
+      \infer{
+              \sem{\Gamma, \Delta \vljud 
+              \text{pm } t \text{ to } x \otimes y.\, s: \typeC}\ = 
+              g \comp \mathrm{sw} \comp (f \otimes \id)
+      }{
+              \sem{\Gamma \vljud t : \typeA \otimes \typeB}\ = f
+              \qquad
+              \sem{\Delta, x: \typeA, y: \typeB \vljud s: \typeC}\ = g
+      }
+  \end{flalign*}
+  \begin{flalign*}
+      \hspace{-0.2cm}
+      \infer[]{\sem{\Gamma \vljud \lambda x : \typeA.\ t : \typeA \multimap \typeB}\ = \lambda f}
+      {
+              \sem{\Gamma, x: \typeA \vljud t : \typeB}\ = f
+      }
+      \hspace{1cm}
+      \infer[]{
+              \sem{\Gamma,\Delta \vljud t \, s : \typeB}\ = \mathrm{app} \comp (f \otimes g)
+      }
+      {
+              \sem{\Gamma \vljud t: \typeA \multimap \typeB}\ = f  \quad
+              \sem{\Delta \vljud s:  \typeA}\ = g }
+  \end{flalign*}
+        } 
+  
+      \begin{center}
+              {\scriptsize (Semantics slightly oversimplified)}
+      \end{center}
+
+\end{frame}
+
+\begin{frame}{The different incarnations of swap}
+        \[
+                \sem{(-) \vdash \lambda x. \> \text{pm } x \text{ to } x_1 \otimes x_2. 
+                \> x_2 \otimes x_1 }
+        \]
+
+        \begin{align*}
+                (v,u) \mapsto (u,v) & \hspace{1cm} \text{ in } \Set 
+                \\[10pt]
+                v \otimes u \mapsto u \otimes v & \hspace{1cm} \text{ in } \CVec
+                \\[10pt]
+                0 \leq (b + a) - (a + b) & \hspace{1cm} \text{ in } \CR
+                \\[10pt]
+                \begin{cases}
+                        n \not = 0 \mapsto \text{undefined}
+                        \\
+                        n = 0 \mapsto (v,u) \mapsto (u,v)
+                \end{cases}
+                & \hspace{1cm} \text{ in } [\Nats, \Met]
+        \end{align*}
+\end{frame}
+
+\begin{frame}{Soundness}
+
+        If $t = s$ then $\sem{t} = \sem{s}$ in any smc category
+
+        \medskip
+        Proof: show that each equation in the eq. system is sound 
+
+        \medskip
+        Enables eq. reasoning across all smc categories at once
+\end{frame}
+
+\begin{frame}{Soundness}
+        Enables eq. reasoning across all smc categories at once
+
+        \medskip
+        \begin{block}{Example}
+                $\lambda(app) = \id$ translates to
+                \[
+                        f : \typeA \multimap \typeB \vdash \lambda x. \, f \, x = f : \typeA \multimap \typeB
+                \]
+        \end{block}
+\end{frame}
 \end{document}
