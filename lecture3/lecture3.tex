@@ -88,7 +88,108 @@ escapeinside={*@}{*@}
 
 \section{Overview}
 
+\begin{frame}{Recall \dots}
+
+        Program equivalence often too strict
+
+        \bigskip
+        \pause
+        Goal: lift this concept to the \alert{metric} realm
+
+        \bigskip
+        \pause
+        Brings \alert{functional analysis} to programming languages
+        \begin{itemize}
+                \item Cauchy sequences (of terms)
+                \item Lipschitz continuity (of term constructs)
+                \item \dots
+        \end{itemize}
+
+\end{frame}
+
+\begin{frame}{The genesis: metric equality}
+
+        Equations labelled by elements of $[0,\infty]$
+
+        \bigskip
+        $t =_\epsilon s$ reads as ``$t$ and $s$ are \alert{at most}
+        at distance $\epsilon$"
+
+\end{frame}
+
+\begin{frame}{The genesis: metric equality}
+
+        \begin{example}[real-time computation]
+                $t =_\epsilon s \, $ : difference of execution times 
+                does not exceed $\epsilon$
+        \end{example}
+
+        \bigskip
+        \pause
+        \begin{example}[probabilistic computation]
+                $t =_\epsilon s \,$ : diff. of prob.
+                w.r.t. any observation does not exceed $\epsilon$
+        \end{example}
+
+        \bigskip
+        \pause
+        \begin{example}[process algebra]
+                $t =_{2^{-n}} s \,$ : same behaviour
+                in the first $n$ computational steps
+        \end{example}
+\end{frame}
+
+\begin{frame}{Today}
+
+        The metric equational system
+
+        \medskip
+        Examples of metric reasoning 
+
+        \medskip
+        The case for linearity
+
+        \medskip
+        The challenge of a categorical semantics
+\end{frame}
+
 \section{Metric equational system}
+
+\begin{frame}{The equational system: a first glimpse}
+
+        $t =_\epsilon s$ reads as ``$t$ and $s$ are \emph{at most}
+        at distance $\epsilon$"
+
+        \bigskip
+        Metric generalisations of eq. laws emerge; others 
+        become apparent  
+
+        \bigskip
+        \begin{examples}
+                \[
+                        \infer[(trans)]{t =_{q + r} u}
+                        {t =_q s \qquad s =_r u}
+                        \hspace{2cm}
+                        \infer[(weak)]{t =_r s}
+                        {t =_q s \quad q \leq r} 
+                \]
+                \[
+                        \infer[(refl)]{t =_0 t}{}
+                \]
+        \end{examples}
+
+\end{frame}
+
+\begin{frame}{For a truly complete system \dots}
+        We need to
+        \begin{itemize}
+                \item integrate metric equational laws
+                        \\[5pt]
+                \item integrate system of Lecture 1 
+                        \\[5pt]
+                \item dictate how metrics interact with term constructs
+        \end{itemize}
+\end{frame}
 
 \section{Categorical semantics}
 
