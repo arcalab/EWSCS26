@@ -180,7 +180,7 @@ escapeinside={*@}{*@}
 
 \end{frame}
 
-\begin{frame}{For a truly complete system \dots}
+\begin{frame}{For a truly complete system for lambda-calculus \dots}
         We need to
         \begin{itemize}
                 \item integrate metric equational laws
@@ -191,6 +191,173 @@ escapeinside={*@}{*@}
         \end{itemize}
 \end{frame}
 
+\begin{frame}{Metric equational laws}
+    \begin{figure}[h!]
+    \begin{flalign*}
+      \infer[]{t =_{q + r} u}{
+        t =_q s  \qquad
+        s =_r u}
+      \hspace{1cm}
+      \infer[]{t =_0 t}{}
+      \hspace{1cm}
+      \infer[]{s =_q t}{t =_q s}
+      \hspace{1cm}
+      \infer[]{t =_r s}{t =_q s \qquad q \leq r }
+     \end{flalign*}
+     \\[5pt]
+     \begin{flalign*}
+      \infer[]{t =_\infty s}{}
+     \end{flalign*} 
+\end{figure}  
+\end{frame}
+\begin{frame}{System of Lecture 1}
+  \scalebox{1.12}{  
+  \begin{tabular}{r c l}
+    $\text{pm}\ t \otimes s\ \text{to}\ x \otimes y.\ u$ &
+    $=_0$ & $u[t/x][s/y]$ \\
+    $\text{pm}\ t\ \text{to}\ x \otimes y.\
+    u[x \otimes y / z]$ &
+    $=_0$ & $u[t/z]$ 
+    \\[5pt]
+    $\ast\ \text{to}\ \ast.\ t$ & $=_0$ & $t$ \\
+    $v\ \text{to}\ \ast.\ w[\ast/ z]$ & $=_0$ & $w[t/z]$
+    \\[5pt]
+    $(\lambda x.\ t)\ s$ &$=_0$& $t[s/x]$ \\
+    $\lambda x. (t\ x)$ &$=_0$& $t$
+  \end{tabular}}
+  %
+\end{frame}
+
+
+\begin{frame}{Interaction between metric and term constructs}
+    \begin{figure}[h!]
+    \begin{flalign*}
+        \infer[]{
+                t \ \text{to}\ \ast.\ u =_{q \otimes r}
+                s \ \text{to}\ \ast.\ v 
+        }
+        {       
+                t =_q s \qquad u =_r v
+        }
+        \hspace{0.8cm}
+        \infer[]{
+                \text{pm}\ t\ \text{to}\ x \otimes y.\ u =_{q \otimes r}
+                \text{pm}\ s\ \text{to}\ x \otimes y.\ v 
+        }{
+                t =_q s \qquad u =_r v
+        }
+    \end{flalign*}
+    \begin{flalign*}
+        \infer[]{
+                t \otimes u =_{q \otimes r} s \otimes v 
+        }
+        {       
+                t =_q s \qquad u =_r v  
+        }
+        \hspace{1cm}
+        \infer[]{
+                \lambda x. t =_q  \lambda x.  s
+        }{
+                t =_q s
+        }
+        \hspace{1cm}
+        \infer[]{
+                t \, u =_{q \otimes r} s \, v
+        }{
+                t =_q s \qquad u =_r v
+        }
+    \end{flalign*} 
+\end{figure}  
+\end{frame}
+
+\begin{frame}{Reasoning example}
+
+        \begin{block}{Quantitative extensionality}
+        \[
+                t \> x =_q s \> x \, \Longleftrightarrow \,  t =_q s
+        \]
+        \end{block}
+
+        \pause
+        \bigskip
+        Proof sketch
+        \begin{flalign*}
+                t \> x =_q s \> x 
+                & \Longrightarrow
+                \lambda x. \, t \> x =_q \lambda x. \, s \> x
+                \\
+                & \Longrightarrow
+                t =_q s 
+                \\
+                & \Longrightarrow
+                t \> x =_q s \> x
+        \end{flalign*}
+\end{frame}
+
+\begin{frame}{Exercises}
+        Prove the following implications
+        \begin{itemize}
+                \item $t =_q s \, \Longrightarrow t[u/x] =_q s[u/x]$ 
+                        \\[10pt]
+                \item $u =_q v \Longrightarrow t[u/x] =_q t[v/x]$
+        \end{itemize}
+\end{frame}
+
+\begin{frame}{The case for linearity}
+
+        \begin{block}{Metric congruence}
+                $u =_q v \Longrightarrow C[u] =_q C[v]$
+        \end{block}
+
+        \pause
+        \bigskip
+        \bigskip
+        \begin{block}{A counter-example ?}
+                $(+1) =_1 (+0)$ but \alert{not}
+                $\lambda f. \> ff(x) \> (+1)  =_1 
+                \lambda f. \> ff (x) \> (+0)$ ?
+        \end{block}
+\end{frame}
+
 \section{Categorical semantics}
 
+\begin{frame}{Main idea}
+
+        $t = s \, \, \, \Longrightarrow \sem{t} = \sem{s}$
+
+        \bigskip
+        \pause
+        $t =_q s \Longrightarrow \dots$
+
+        \bigskip
+        \pause
+        The sets of arrows need to be \alert{metric spaces}
+
+        \bigskip
+        $t =_q s \Longrightarrow d(\sem{t},\sem{s}) \leq q$
+\end{frame}
+
+\begin{frame}{Main idea}
+        \dots\ also all categorical operations associated
+        to term constructs need to be \alert{non-expansive}, viz.
+
+        \begin{itemize}
+                \item $\catC(A,B) \otimes \catC(B,C) \to \catC(A,C)$
+                        \hspace{2cm} (composition) 
+                \item $\catC(A,B) \otimes \catC(C,D) \to \catC(A \otimes C, B \otimes D)$
+                        \hspace{0.57cm} (tensoring) 
+                \item $\catC(A \otimes B, C) \to \catC(A, B \multimap C)$
+                        \hspace{2.01cm} (currying) 
+        \end{itemize}
+
+        \pause
+        \bigskip
+        We call such categories \alert{metrically enriched}
+\end{frame}
+
+\begin{frame}{Exercise}
+
+        Show that the category of metric spaces and non-expansive
+        functions is metrically enriched
+\end{frame}
 \end{document}
