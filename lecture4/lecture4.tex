@@ -1,0 +1,216 @@
+% !TeX program = xelatex
+\documentclass{beamer}
+\usepackage{etex} % fixes new-dimension error
+%-------------- template --------------------------------------------------
+\usetheme{metropolis}
+\metroset{block=fill}
+%\usetheme{Boadilla}
+
+% Configuring the foot line
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.4\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertsection
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+% No configuration symbols
+\makeatother
+\setbeamertemplate{navigation symbols}{}
+%----------------------------------------------------------------------------
+\usepackage{graphicx,amsmath}
+\usepackage{stmaryrd} % cf. interleave
+\usepackage{booktabs}
+\usepackage{amscd}
+\usepackage{multicol}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{alltt}
+\usepackage{proof}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage[new]{old-arrows}
+\usepackage[all]{xy}
+\usepackage{pgfplots}
+\usepackage{textcomp}
+\usepackage{listings}
+\usetikzlibrary{arrows.meta, calc, fit, tikzmark}
+
+\AtBeginSection[]
+{
+    \begin{frame}
+        \frametitle{Table of Contents}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+\author[Renato Neves]{Renato Neves}
+
+% logos of institutions
+\titlegraphic{
+  \begin{textblock*}{5cm}(7.8cm,7.45cm)
+     \includegraphics[scale=0.044]{../images/uminho.png}\hspace*{.85cm}~%
+  \end{textblock*}
+  \begin{textblock*}{5cm}(9.8cm,7.45cm)
+    \includegraphics[scale=0.4]{../images/haslab.pdf}
+  \end{textblock*}
+}
+
+% code
+\lstset{
+showstringspaces=false,
+keywordstyle=\color{blue},
+basicstyle=\fontsize{08.5}{10}\ttfamily,
+emph={while,do,if,diff,for,exit,blue,unif,then,else,wait,bernoulli,exp,normal,sqrt,cos,';'},emphstyle=\color{blue},
+breaklines=true,
+escapeinside={*@}{*@}
+}
+
+\input{macros}
+
+
+% No date
+\date{}
+
+
+\begin{document}
+
+\title{Lecture 4}
+
+\frame[plain]{\titlepage}
+
+\section{Overview}
+
+\begin{frame}{Recap}
+
+        Saw how to interpret \alert{metric} $\lambda$-calculus
+
+        \dots\ on \alert{metrically enriched} smc categories
+\end{frame}
+
+\begin{frame}{Today}
+
+        Prove that the metric eq. system is
+        \alert{sound \& complete}
+
+        \pause
+        \bigskip
+        Apply what we learned to probabilistic programming
+
+        \pause
+        \bigskip
+        (Possible) extensions of this work
+\end{frame}
+
+\section{Theories, soundness, and completeness}
+
+\begin{frame}{Theory}
+
+        \begin{definition}[Signature]
+                Set of basic types + operation symbols
+                $f : \typeA_1, \dots, \typeA_n \to \typeB$
+        \end{definition}
+
+
+        \bigskip
+        \pause
+        \begin{definition}[Theory]
+                A signature + a set of basic metric equations (axioms)
+        \end{definition}
+
+
+        \bigskip
+        \pause
+        \begin{definition}[Theorem]
+                A metric equation that is provable in a given theory
+        \end{definition}
+\end{frame}
+
+\begin{frame}{Example -- wait calls}
+
+        \begin{itemize}
+                \item A single basic type $X$
+                        \\[7pt]
+                \item countable set of operations $\left \{ \text{wait}_n : X \to X \mid n \in \Nats \right \}$
+                        \\[7pt]
+                \item the following axioms
+        \end{itemize}
+        \vspace{-0.4cm}
+        \begin{align*}
+                & \left \{ \text{wait}_n(x) =_{| n - m|} \text{wait}_m(x) \mid n,m \in \Nats \right \}
+                \\[5pt]
+                & \left \{ \text{wait}_n(\text{wait}_m(x)) =_0 \text{wait}_{n+m}(x) \mid n,m \in \Nats \right \}
+                \\[5pt]
+                & \left \{ \text{wait}_0(x) =_0 x \right \} 
+        \end{align*}
+\end{frame}
+
+\begin{frame}{Example -- wait calls}
+        We can then reason metrically, eg
+        \[
+                \infer{
+                        \lambda x. \, x =_\epsilon \lambda x. \, \text{wait}_\epsilon(x)
+                }{
+                        \begin{aligned}
+                                x 
+                                & =_0 \text{wait}_0(x) 
+                                \\
+                                & =_\epsilon \text{wait}_\epsilon(x)
+                        \end{aligned}
+                }
+        \]
+
+        \pause
+        \bigskip
+        But is this correct ?
+\end{frame}
+
+\begin{frame}{Soundness}
+
+        Pick a theory and any associated theorem $t =_q s$
+        
+        Pick an interpretation $\sem{-}$ 
+
+        If all axioms are satisfied by the interpretation then
+        \[
+                d(\sem{t},\sem{s}) \leq q
+        \]
+                
+        \pause
+        \bigskip
+        Proof sketch: routine induction over proof derivation trees
+\end{frame}
+
+
+\begin{frame}{Completeness}
+
+        Pick a theory $\mathcal{T}$ and suppose all models satisfy
+        \[
+                d(\sem{t},\sem{s}) \leq q
+        \]
+
+        \medskip
+        For every \alert{approximation} $q + \epsilon > q$
+        \[
+                t =_{q + \epsilon} s \text{ is a theorem }
+        \]
+
+        \pause
+        \bigskip
+        Proof idea: build a metrically enriched smc category
+        from $\mathcal{T}$
+
+        Then show $d(t,s) \leq q \Longrightarrow t =_{q + \epsilon} s$ is a theorem
+\end{frame}
+\section{Application to probabilistic programming}
+
+\section{Conclusion}
+
+\end{document}
