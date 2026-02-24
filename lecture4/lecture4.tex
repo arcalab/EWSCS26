@@ -209,8 +209,65 @@ escapeinside={*@}{*@}
 
         Then show $d(t,s) \leq q \Longrightarrow t =_{q + \epsilon} s$ is a theorem
 \end{frame}
+
+\section{Extensions}
+
+\begin{frame}{Back to linearity}
+
+        Linearity too strict ?
+
+        \pause
+        \medskip
+        Not a problem !
+
+        \pause
+        \medskip
+        Boost expressivity \alert{but} use the typing system to track it, eg
+        \[
+                x :\, !_n \, \typeA \vdash t : \typeB
+                \hspace{1cm}
+                \text{($x$ can be used $n$-times)}
+        \]
+\end{frame}
+
+\begin{frame}{Other type constructs -- conditionals (disjunction)}
+
+        \[
+                \infer{
+                        \Gamma, \Delta \vdash
+                        \text{case} \>  t \> \{ \, x \Rightarrow s ; \> y \Rightarrow u \} 
+                        : \typeC
+                }{
+                        \Gamma \vdash t : \typeA \oplus \typeB
+                        \qquad
+                        \Delta, x : \typeA \vdash s : \typeC
+                        \qquad
+                        \Delta, y : \typeB \vdash u : \typeC
+                }
+        \]
+
+        \pause
+        \bigskip
+        \[
+                \infer{
+                        \text{case} \>  t \> \{ \, x \Rightarrow s ; \> y \Rightarrow u \, \} 
+                        =_{q \vee r}
+                        \text{case} \>  t \> \{ \, x \Rightarrow v ; \> y \Rightarrow w \, \} 
+                }{
+                        s =_q v \qquad u =_r w
+                }
+        \]
+\end{frame}
+
 \section{Application to probabilistic programming}
 
-\section{Conclusion}
+\begin{frame}{The end !}
 
+    \includegraphics[scale=0.2]{../images/newworlds.png}
+    \flushright
+    \vspace{-0.8cm}
+    {\fontsize{4}{5}\selectfont
+                variation of IQIM + PhD comics
+    }
+\end{frame}
 \end{document}
