@@ -261,6 +261,152 @@ escapeinside={*@}{*@}
 
 \section{Application to probabilistic programming}
 
+\begin{frame}{Banach spaces (linear algebra for prob. programming)}
+
+        Vector space $V$ with a notion of size (norm)
+        \[
+              \lVert - \rVert : V \longrightarrow \Rz
+        \]
+        plus closure under limits
+
+        \bigskip
+        \begin{examples}
+         The real numbers $\Reals$, continuous distributions $M(\Reals)$ \dots
+        \end{examples}
+
+        \pause
+        \bigskip
+        The function $(v_1,v_2) \mapsto \lVert v_1 - v_2 \rVert$ is a \alert{metric}
+\end{frame}
+
+\begin{frame}{Continuous distributions over the reals}
+
+        These are functions
+        \[
+                \mu : \{ \text{opens of } \Reals \} \longrightarrow \Rz
+        \]
+        plus some coherence conditions
+
+
+        \bigskip
+        \pause
+        We also have the norm
+        \[
+                \lVert \mu \rVert = \sup
+                \left \{ \sum_{i = 1}^n | \mu(U_i) | \mid \{U_1,\dots,U_n\} \text{ a partition of opens} \right \}
+        \]
+
+        \pause
+        which can be cumbersome to calculate \dots
+\end{frame}
+
+\begin{frame}{Linear structure over Banach spaces}
+
+        Norms in tensor products $V \otimes W$ also cumbersome to calculate
+
+        \medskip
+        $V \multimap W$ = $(\{ \text{continuous linear maps } V \to W \},\lVert - \rVert)$
+        \[
+          \lVert f \rVert = \sup \{ \lVert f (v) \rVert \mid \lVert v \rVert \leq 1 \}      
+        \]
+\end{frame}
+
+\begin{frame}{A probabilistic theory}
+
+        \begin{itemize}
+                \item $\sem{\mathtt{reals}} = M(\Reals)$ 
+                \item $\sem{+ : \mathtt{reals},\mathtt{reals} \to \mathtt{reals}} : M(\Reals) \otimes M(\Reals) 
+                                \to M(\Reals)$
+                \item $\sem{\mathtt{unif}(a,b) : \typeI \to \mathtt{reals}} : \Reals \to M(\Reals)$
+        \end{itemize}
+
+        \bigskip
+        plus a simple axiom
+        \[
+                \mathtt{unif}(0,1) =_{\frac{2 \epsilon}{1 + \epsilon}}
+                \mathtt{unif}(0,1+\epsilon)
+        \]
+\end{frame}
+
+\begin{frame}{A probabilistic theory}
+        \[
+                \mathtt{unif}(0,1) =_{\frac{2 \epsilon}{1 + \epsilon}}
+                \mathtt{unif}(0,1+\epsilon)
+        \]
+        \bigskip
+        \centering
+        \includegraphics[scale=0.4]{../images/distance.png}
+\end{frame}
+
+\begin{frame}{Random walks}
+        Basic ingredients
+
+        \medskip
+        \[
+                \infer{
+                        (-) \vdash \underbrace{ \lambda x. \, x + \mathtt{unif}(0,a)}_{\mathtt{jump}_a} 
+                        : \mathtt{real} \multimap \mathtt{real}
+                }{
+                        x : \mathtt{real} \vdash x + \mathtt{unif}(0,1)
+                        : \mathtt{real}
+                }
+        \]
+        
+        \[
+                x : \mathtt{real} \vdash
+                \underbrace{\lambda f_1 \> \dots \> \lambda f_n . \> f_1 \dots f_n (x)}_{\mathtt{seq}_n(x)}
+        \]
+\end{frame}
+
+\begin{frame}{Random walks}
+
+        We can then derive
+        \begin{align*}
+                x : \mathtt{real} \vdash 
+                & \> \mathtt{seq}_n(x) \>
+                \mathtt{jump}_1 \dots \mathtt{jump}_1
+                \\
+                & =_{ n \frac{2\epsilon}{1 + \epsilon} }
+                \\
+                & \> \mathtt{seq}_n(x) \>
+                \mathtt{jump}_{1 + \epsilon} \dots \mathtt{jump}_{1 + \epsilon}
+                : \mathtt{real}
+        \end{align*}
+\end{frame}
+
+\begin{frame}{Two dimensional random walks}
+
+        \dots\ or for example
+        \begin{align*}
+                x : \mathtt{real} \otimes \mathtt{real} \vdash 
+                & \> \text{pm} \> x \> \text{to} \> x_1 \otimes x_2 \> 
+                \\
+                & \> \mathtt{seq}_n(x_1) \>
+                \mathtt{jump}_1 \dots \mathtt{jump}_1
+                \\
+                & \> \otimes
+                \\
+                & \> \mathtt{seq}_n(x_2) \>
+                \mathtt{jump}_1 \dots \mathtt{jump}_1
+                \\
+                & =_{ n \left ( \frac{2\epsilon}{1 + \epsilon} + \frac{2\delta}{1 + \delta} \right ) }
+                \\
+                & \> \text{pm} \> x \> \text{to} \> x_1 \otimes x_2 \> 
+                \\
+                & \> \mathtt{seq}_n(x_1) \>
+                \mathtt{jump}_{1+\epsilon} \dots \mathtt{jump}_{1+\epsilon}
+                \\
+                & \> \otimes
+                \\
+                & \> \mathtt{seq}_n(x_2) \>
+                \mathtt{jump}_{1+\delta} \dots \mathtt{jump}_{1+\delta} : \mathtt{real} \otimes \mathtt{real}
+        \end{align*}
+
+\end{frame}
+
+\begin{frame}{Exercise}
+        Prove that the previous equations indeed hold
+\end{frame}
 \begin{frame}{The end !}
 
     \includegraphics[scale=0.2]{../images/newworlds.png}
