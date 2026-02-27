@@ -112,7 +112,7 @@ escapeinside={*@}{*@}
 
 \begin{frame}[fragile]{From equations to metric equations}
      
-        \hspace{-1cm}
+        \hspace{-1.5cm}
         \begin{minipage}{0.50\textwidth}
         \begin{lstlisting}
                 x *@$\leftarrow$*@ *@\color{blue}{$\mu$}*@; p(x)
@@ -148,12 +148,7 @@ escapeinside={*@}{*@}
 
 \begin{frame}{From equations to metric equations}
 
-
-        Traditional program equivalence is often too strict
-
-        \bigskip
-        \pause
-        Goal: present a more general, \alert{metric} counterpart
+        Goal: present a \alert{metric equational system}
 
         \bigskip
         \pause
@@ -176,8 +171,7 @@ escapeinside={*@}{*@}
 
         \pause
         \bigskip
-        Lecture 3 : \alert{logical} framework for relating progrs. w.r.t.
-        \alert{distances}
+        Lecture 3 : framework for relating progrs. w.r.t.  \alert{distances}
 
         \pause
         \bigskip
@@ -248,10 +242,16 @@ escapeinside={*@}{*@}
       {
         \Gamma, \typeA \vljud  \typeB
       }
-      \hspace{2cm}
+      \hspace{1cm}
       \infer[(\rulename{app})]{\Gamma,\Delta \vljud \typeB}
       {\Gamma \vljud  \typeA \multimap \typeB \quad
         \Delta \vljud  \typeA}
+      \hspace{1cm}
+        \infer[(\rulename{prm})]{
+              \pi(\Gamma) \vdash \typeA
+      }{       
+              \Gamma \vdash \typeA
+      }
   \end{flalign*}
   } 
   
@@ -267,19 +267,19 @@ escapeinside={*@}{*@}
 \end{frame}
 
 
-\begin{frame}{New knowledge from old}
-  The rules below are \alert{derivable} from the previous system
-
-  \begin{flalign*}
-      \infer[\text{(exchange)}]{\Gamma, \typeB, \typeA,\Delta \vljud \typeC}{
-      \Gamma, \typeA, \typeB,\Delta \vljud \typeC}
-  \end{flalign*}
-  \begin{flalign*}
-      \infer[\text{(cut elimination)}]{\Gamma, \Delta \vljud \typeB}{
-      \Gamma, \typeA \vljud \typeB \qquad \Delta \vljud \typeA}
-  \end{flalign*}
-
-\end{frame}
+%\begin{frame}{New knowledge from old}
+%  The rules below are \alert{derivable} from the previous system
+%
+%  \begin{flalign*}
+%      \infer[\text{(exchange)}]{\Gamma, \typeB, \typeA,\Delta \vljud \typeC}{
+%      \Gamma, \typeA, \typeB,\Delta \vljud \typeC}
+%  \end{flalign*}
+%  \begin{flalign*}
+%      \infer[\text{(cut elimination)}]{\Gamma, \Delta \vljud \typeB}{
+%      \Gamma, \typeA \vljud \typeB \qquad \Delta \vljud \typeA}
+%  \end{flalign*}
+%
+%\end{frame}
 
 
 \begin{frame}{Linear $\lambda$-calculus}
@@ -296,7 +296,7 @@ escapeinside={*@}{*@}
           \hspace{-0.2cm}
       \infer[]{x : \typeA \vljud x : \typeA}{} \hspace{2cm}
       \infer[]{(-) \vljud  \ast : \typeI}{}  \hspace{2cm}
-      \infer{\Gamma,\Delta \vljud t \text{ to } \ast.\  \, s: \typeA}{
+      \infer{\Gamma,\Delta \vljud t \text{ to} \ast.\  \, s: \typeA}{
               \Gamma \vljud t : \typeI \qquad
               \Delta \vljud s : \typeA
       }
@@ -316,14 +316,18 @@ escapeinside={*@}{*@}
   \end{flalign*}
   \begin{flalign*}
       \hspace{-0.2cm}
-      \infer[]{\Gamma \vljud \lambda x : \typeA.\ t : \typeA \multimap \typeB}
+      \infer[]{\Gamma \vljud \lambda x.\ t : \typeA \multimap \typeB}
       {
         \Gamma, x: \typeA \vljud t : \typeB
       }
-      \hspace{2cm}
+      \hspace{1cm}
       \infer[]{\Gamma,\Delta \vljud t \, s : \typeB}
       {\Gamma \vljud t: \typeA \multimap \typeB \quad
         \Delta \vljud s:  \typeA}
+      \hspace{1cm}
+      \infer[]{
+              \pi(\Gamma) \vdash t : \typeA
+      }{        \Gamma \vdash t : \typeA}
   \end{flalign*}
         } 
 \end{frame}
@@ -335,7 +339,7 @@ escapeinside={*@}{*@}
           && \text{(swap)}
           \\[15pt]
           & f : \alert{\typeA \multimap \typeB}, g : \alert{\typeB \multimap \typeC} \vljud
-          \lambda x : \typeA . \> g (f \> x) : \alert{\typeA \multimap \typeC}
+          \lambda x. \> g (f (x)) : \alert{\typeA \multimap \typeC}
           && \text{(composition)}
   \end{flalign*}
 
@@ -347,7 +351,7 @@ escapeinside={*@}{*@}
 \end{frame}
 
 
-\begin{frame}{Substitution -- a form of computation}
+\begin{frame}{Substitution}
         \begin{block}{The essence}
                 Substitution of variables in a term $t$ by another term $s$
         \end{block}
@@ -358,11 +362,11 @@ escapeinside={*@}{*@}
         \bigskip
         \begin{examples}
                 \begin{itemize}
-                        \item $x[t/x] = x$
+                        \item $x[t/x] = t$
                         \item $(x \otimes y)[t/x] = t \otimes y$
                         \item $(\text{pm } x \text{ to } x_1 \otimes x_2. \>
                                 s) \> [t/x] = 
-                                \text{pm } t \text{ to } x_1 \otimes x_2. \> s$
+                                \text{pm } t \text{ to } x_1 \otimes x_2. \> s[t/x]$
                 \end{itemize}
         \end{examples}
 
