@@ -207,7 +207,7 @@ escapeinside={*@}{*@}
                        A \otimes B \ar[dr]^{f} 
                        \ar@{->}[d]_{(\lambda f) \otimes \id}
                        \\
-                       (A \multimap B) \otimes B \ar[r]_(0.55){\mathrm{app}} & C
+                       (B \multimap C) \otimes B \ar[r]_(0.55){\mathrm{app}} & C
                }
         \]
 
@@ -314,22 +314,17 @@ escapeinside={*@}{*@}
 
 \begin{frame}{The different incarnations of swap}
         \[
-                \sem{(-) \vdash \lambda x. \> \text{pm } x \text{ to } x_1 \otimes x_2. 
-                \> x_2 \otimes x_1 }
+                \sem{x  \vdash \lambda y. \> y \otimes x }
         \]
 
         \begin{align*}
-                (v,u) \mapsto (u,v) & \hspace{1cm} \text{ in } \Set 
+                v \mapsto (u \mapsto (u,v)) & \hspace{1cm} \text{ in } \Set 
                 \\[10pt]
-                v \otimes u \mapsto u \otimes v & \hspace{1cm} \text{ in } \CVec
+                v \mapsto (u \mapsto u \otimes v) & \hspace{1cm} \text{ in } \CVec
                 \\[10pt]
-                0 \leq (b + a) - (a + b) & \hspace{1cm} \text{ in } \CR
+                a \leq (b + a) - b & \hspace{1cm} \text{ in } \CR
                 \\[10pt]
-                \begin{cases}
-                        n \not = 0 \mapsto \text{undefined}
-                        \\
-                        n = 0 \mapsto (v,u) \mapsto (u,v)
-                \end{cases}
+                (v_i \mapsto (u_j \mapsto (u_j,v_i))_{j \in \Nats})_{i \in \Nats}
                 & \hspace{1cm} \text{ in } [\Nats, \Met]
         \end{align*}
 \end{frame}
@@ -355,5 +350,24 @@ escapeinside={*@}{*@}
                         f : \typeA \multimap \typeB \vdash \lambda x. \, f \, x = f : \typeA \multimap \typeB
                 \]
         \end{block}
+\end{frame}
+
+
+\begin{frame}{Exercise}
+
+        In any smc category the two morphisms below are equal
+        \[
+                \xymatrix@C=40pt{
+                        A \ar[r]^(0.3){\lambda(sw)} 
+                        \ar@/_1.5pc/[rr]_{\lambda(\id)} 
+                        & (B \multimap B \otimes A)
+                        \ar[r]^{\lambda(sw \comp app) } &
+                        (B \multimap A \otimes B)
+                }
+        \]
+
+        Prove that such is true via $\lambda$-calculus and its eq. system
+
+        Hint: arrow composition corresponds to substitution
 \end{frame}
 \end{document}
