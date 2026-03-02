@@ -233,7 +233,7 @@ escapeinside={*@}{*@}
     \begin{figure}[h!]
     \begin{flalign*}
         \infer[]{
-                t \ \text{to}\ \ast.\ u =_{q \otimes r}
+                t \ \text{to}\ \ast.\ u =_{q + r}
                 s \ \text{to}\ \ast.\ v 
         }
         {       
@@ -241,7 +241,7 @@ escapeinside={*@}{*@}
         }
         \hspace{0.8cm}
         \infer[]{
-                \text{pm}\ t\ \text{to}\ x \otimes y.\ u =_{q \otimes r}
+                \text{pm}\ t\ \text{to}\ x \otimes y.\ u =_{q + r}
                 \text{pm}\ s\ \text{to}\ x \otimes y.\ v 
         }{
                 t =_q s \qquad u =_r v
@@ -249,7 +249,7 @@ escapeinside={*@}{*@}
     \end{flalign*}
     \begin{flalign*}
         \infer[]{
-                t \otimes u =_{q \otimes r} s \otimes v 
+                t \otimes u =_{q + r} s \otimes v 
         }
         {       
                 t =_q s \qquad u =_r v  
@@ -262,7 +262,7 @@ escapeinside={*@}{*@}
         }
         \hspace{1cm}
         \infer[]{
-                t \, u =_{q \otimes r} s \, v
+                t \, u =_{q + r} s \, v
         }{
                 t =_q s \qquad u =_r v
         }
@@ -312,10 +312,10 @@ escapeinside={*@}{*@}
         \pause
         \bigskip
         \bigskip
-        \begin{block}{A counter-example ?}
+        \begin{block}{In the Cartesian case}
                 $(+1) =_1 (+0)$ but \alert{not}
                 $\lambda f. \> ff(x) \> (+1)  =_1 
-                \lambda f. \> ff (x) \> (+0)$ ?
+                \lambda f. \> ff (x) \> (+0)$
         \end{block}
 \end{frame}
 
