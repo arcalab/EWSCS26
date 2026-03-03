@@ -429,5 +429,28 @@ escapeinside={*@}{*@}
         \end{align*}
 \end{frame}
 
+\begin{frame}{Example -- wait calls}
+
+        
+        We can then reason metrically, eg
+        \[
+                \infer{
+                        \lambda x. \, x =_\epsilon \lambda x. \, \text{wait}_\epsilon(x)
+                }{
+                        \begin{aligned}
+                                x 
+                                & =_0 \text{wait}_0(x) 
+                                \\
+                                & =_\epsilon \text{wait}_\epsilon(x)
+                        \end{aligned}
+                }
+        \]
+
+        \pause
+        \bigskip
+        But is this correct ?
+\end{frame}
+
+
 
 \end{document}
