@@ -360,4 +360,74 @@ escapeinside={*@}{*@}
         Show that the category of metric spaces and non-expansive
         functions is metrically enriched
 \end{frame}
+
+\section{Theories}
+
+\begin{frame}{Theory}
+
+        \begin{definition}[Signature]
+                Set of basic types + operation symbols
+                $f : \typeA_1, \dots, \typeA_n \to \typeB$
+        \end{definition}
+
+
+        \bigskip
+        \pause
+        \begin{definition}[Theory]
+                A signature + a set of basic metric equations (axioms)
+        \end{definition}
+
+
+        \bigskip
+        \pause
+        \begin{definition}[Theorem]
+                A metric equation that is provable in a given theory
+        \end{definition}
+\end{frame}
+
+\begin{frame}{Example -- wait calls}
+
+        \begin{itemize}
+                \item A single basic type $X$
+                        \\[7pt]
+                \item countable set of operations $\left \{ \text{wait}_n : X \to X \mid n \in \Nats \right \}$
+                        \\[7pt]
+                \item the following axioms
+        \end{itemize}
+        \vspace{-0.4cm}
+        \begin{align*}
+                & \left \{ \text{wait}_n(x) =_{| n - m|} \text{wait}_m(x) \mid n,m \in \Nats \right \}
+                \\[5pt]
+                & \left \{ \text{wait}_n(\text{wait}_m(x)) =_0 \text{wait}_{n+m}(x) \mid n,m \in \Nats \right \}
+                \\[5pt]
+                & \left \{ \text{wait}_0(x) =_0 x \right \} 
+        \end{align*}
+\end{frame}
+
+\begin{frame}{A model of wait calls in $\Met$}
+        \begin{itemize}
+                \item
+                        $\sem{X} = \text{Discrete}(O) \otimes \Nats $
+                \item   $\sem{\text{wait}_n} = \id \otimes\, (+n) $
+        \end{itemize}
+
+        \pause
+        \begin{align*}
+                \hspace{-2cm}
+                \Gamma \vdash t =_q s : X 
+                &
+                \> \Longrightarrow \> 
+                \forall \gamma \in \sem{\Gamma}. \
+                \text{let} \,
+                (o,a) = \sem{t}(\gamma)
+                \\
+                & 
+                \hspace{3.15cm} (p,b) = \sem{s}(\gamma)
+                \\
+                & 
+                \hspace{3.15cm} o = p \> \wedge  \mid a - b \mid \, \leq \, q
+        \end{align*}
+\end{frame}
+
+
 \end{document}
