@@ -355,6 +355,15 @@ escapeinside={*@}{*@}
         We call such categories \alert{metrically enriched}
 \end{frame}
 
+\begin{frame}{Examples}
+        \begin{itemize}
+                \item Every smc category is \alert{trivially} metrically enriched
+                \item Metric spaces and non-expansive maps 
+                \item Banach spaces and linear \alert{contractions}
+                \item $n$-dimensional spaces and \alert{quantum processes}
+                \item Topos of trees
+        \end{itemize}
+\end{frame}
 \begin{frame}{Exercise}
 
         Show that the category of metric spaces and non-expansive
@@ -452,5 +461,26 @@ escapeinside={*@}{*@}
 \end{frame}
 
 
+\begin{frame}{Exercise session}
+
+        A model for the variation
+        \begin{itemize}
+                \item A single basic type $X$
+                        \\[7pt]
+                \item countable set of operations $\left \{ \text{wait}_n : X \to X \mid n \in \Nats \right \}$
+                        \\[7pt]
+                \item the following axioms
+        \end{itemize}
+        \vspace{-0.4cm}
+        \begin{align*}
+                & \left \{ 
+                \alert{ \text{wait}_n(x) =_{\frac{1}{2^{\min(n,m)}}} \text{wait}_m(x)} \mid n,m \in \Nats \right \}
+                \\[5pt]
+                & \left \{ \text{wait}_n(\text{wait}_m(x)) =_0 \text{wait}_{n+m}(x) \mid n,m \in \Nats \right \}
+                \\[5pt]
+                & \left \{ \text{wait}_0(x) =_0 x \right \} 
+        \end{align*}
+
+\end{frame}
 
 \end{document}
