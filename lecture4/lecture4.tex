@@ -211,11 +211,50 @@ escapeinside={*@}{*@}
 
         \pause
         \medskip
+        \alert{Affine} $\lambda$-calculus also interacts well with 
+        metrics !
+\end{frame}
+
+\begin{frame}{Affine $\lambda$-calculus}
+
+        The only new term formation rule
+        \[
+                \infer{
+                        \Gamma \vdash \text{dis}(t) : \typeI
+                }{
+                        \Gamma \vdash t : \typeA
+                }
+        \]
+
+        \pause
+        \medskip
+        \dots\ and the only new metric equation
+        \[
+                x : A \vdash t =_0 \text{dis}(x) : \typeI
+        \]
+\end{frame}
+\begin{frame}{Affine lambda-calculus}
+
+        Affineness still too strict  ?
+
+        \pause
+        \medskip
+        Not a problem !
+
+        \pause
+        \medskip
         Boost expressivity \alert{but} use the typing system to track it, eg
         \[
-                x :\, !_n \, \typeA \vdash t : \typeB
+                x :\, \alert{ !_n \, \typeA } \vdash t : \typeB
                 \hspace{1cm}
                 \text{($x$ can be used $n$-times)}
+        \]
+
+        \pause
+        \dots\ and we get Lipschitz congruence
+        \[
+                s =_q u : \typeA \Longrightarrow
+                t[s/x] =_{n \cdot q} t[u/x]
         \]
 \end{frame}
 
@@ -248,6 +287,25 @@ escapeinside={*@}{*@}
         \]
 \end{frame}
 
+\begin{frame}{The quantalic generalisation}
+
+        The whole theory is generalisable to \alert{quantales}
+
+        \medskip
+        \pause
+        This yields such as things as 
+        \begin{itemize}
+                \item classical (in)equational logic (Boolean quantale)
+                        \\[5pt]
+                \item metric (in)equational logic (metric quantale)
+                        \\[5pt]
+                \item ultrametric (in)equational logic (ultrametric quantale)
+                        \\[5pt]
+                \item fuzzy (in)equational logic (Gödel quantale)
+                        \\[5pt]
+                \item \dots
+        \end{itemize}
+\end{frame}
 \section{Application to probabilistic programming}
 
 \begin{frame}{Banach spaces (linear algebra for prob. programming)}
@@ -281,7 +339,7 @@ escapeinside={*@}{*@}
         \pause
         We also have the norm
         \[
-                \lVert \mu \rVert = \sup
+                \lVert \mu \rVert = \bigvee
                 \left \{ \sum_{i = 1}^n | \mu(U_i) | \mid \{U_1,\dots,U_n\} \text{ a partition of opens} \right \}
         \]
 
@@ -296,7 +354,7 @@ escapeinside={*@}{*@}
         \medskip
         $V \multimap W$ = $(\{ \text{continuous linear maps } V \to W \},\lVert - \rVert)$
         \[
-          \lVert f \rVert = \sup \{ \lVert f (v) \rVert \mid \lVert v \rVert \leq 1 \}      
+          \lVert f \rVert = \bigvee \left \{ \> \lVert f (v) \rVert \mid \lVert v \rVert \leq 1 \> \right \}      
         \]
 \end{frame}
 
@@ -393,9 +451,7 @@ escapeinside={*@}{*@}
 
 \end{frame}
 
-\begin{frame}{Exercise}
-        Prove that the previous equations indeed hold
-\end{frame}
+
 \begin{frame}{The end !}
 
     \includegraphics[scale=0.2]{../images/newworlds.png}
