@@ -133,47 +133,6 @@ escapeinside={*@}{*@}
         \end{definition}
 \end{frame}
 
-\begin{frame}{Example -- wait calls}
-
-        \begin{itemize}
-                \item A single basic type $X$
-                        \\[7pt]
-                \item countable set of operations $\left \{ \text{wait}_n : X \to X \mid n \in \Nats \right \}$
-                        \\[7pt]
-                \item the following axioms
-        \end{itemize}
-        \vspace{-0.4cm}
-        \begin{align*}
-                & \left \{ \text{wait}_n(x) =_{| n - m|} \text{wait}_m(x) \mid n,m \in \Nats \right \}
-                \\[5pt]
-                & \left \{ \text{wait}_n(\text{wait}_m(x)) =_0 \text{wait}_{n+m}(x) \mid n,m \in \Nats \right \}
-                \\[5pt]
-                & \left \{ \text{wait}_0(x) =_0 x \right \} 
-        \end{align*}
-\end{frame}
-
-\begin{frame}{Example -- wait calls}
-
-        
-        We can then reason metrically, eg
-        \[
-                \infer{
-                        \lambda x. \, x =_\epsilon \lambda x. \, \text{wait}_\epsilon(x)
-                }{
-                        \begin{aligned}
-                                x 
-                                & =_0 \text{wait}_0(x) 
-                                \\
-                                & =_\epsilon \text{wait}_\epsilon(x)
-                        \end{aligned}
-                }
-        \]
-
-        \pause
-        \bigskip
-        But is this correct ?
-\end{frame}
-
 \begin{frame}{Soundness}
 
         Pick a theory and any associated theorem $t =_q s$
@@ -210,6 +169,34 @@ escapeinside={*@}{*@}
         from $\mathcal{T}$
 
         Then show $d(t,s) \leq q \Longrightarrow t =_{q + \epsilon} s$ is a theorem
+\end{frame}
+
+\begin{frame}{The syntactic category}
+
+        \begin{itemize}
+                \item Objects are the types
+                \item Morphisms $A \to B$ ``are"
+                        the terms $x : A \vdash t : B$
+                \item $d(t,s) = \bigwedge
+                        \Big \{ q \mid t =_q s \> \text{ is a theorem } \Big \}$
+        \end{itemize}
+
+        \medskip
+        \begin{align*}
+                d(t,s) = & \bigwedge
+                        \Big \{ r \mid t =_r s \> \text{ is a theorem } \Big \}
+                        \leq q < q + \epsilon
+                        \\
+                         &
+                         \Longrightarrow
+                         \exists r. \,
+                         r \leq q + \epsilon \> \wedge \>
+                         t =_r s \text{ is a theorem }
+                         \\
+                         &
+                         \Longrightarrow
+                         t =_{q + \epsilon} s \text{ is a theorem }
+        \end{align*}
 \end{frame}
 
 \section{Extensions}
